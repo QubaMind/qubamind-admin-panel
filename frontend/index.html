@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><title>Panel</title></head><body>
+<h2>QubaMind Panel</h2>
+<input id="cmd" placeholder="Type command..." />
+<button onclick="send()">Send</button>
+<div id="response"></div>
+<script>
+async function send() {
+  const res = await fetch("/command", {
+    method: "POST",
+    headers: {
+      "Authorization": localStorage.getItem("token"),
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({ command: document.getElementById("cmd").value })
+  });
+  const data = await res.json();
+  document.getElementById("response").innerText = data.response;
+}
+fetch("/verify-token", {
+  headers: { "Authorization": localStorage.getItem("token") }
+}).then(r => {
+  if (!r.ok) window.location.href = "login.html";
+});
+</script></body></html>
