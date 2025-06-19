@@ -1,0 +1,1 @@
+# qubamind-admin-panel
